@@ -17,7 +17,7 @@ def update_historia(hisotria_pk, new_historia):
     return historia
 
 def create_historia(me):
-    historia = Historia(name = me["name"], descripcion = ["descripcion"], adenda=["adenda"])
+    historia = Historia(name = me["name"], descripcion = ["descripcion"])
     historia.save()
     return historia
 
@@ -54,8 +54,8 @@ def historia_views(request):
             historia = serializers.serialize('json',[historia_dto,])
             return HttpResponse(historia, 'apllication/json')
         else:
-            historias_dto = me.create_historia(json.loads(request.body))
-            historia = serializers.serialize('json', historias_dto)
+            historia_dto = me.create_historia(json.loads(request.body))
+            historia = serializers.serialize('json', historia_dto)
             return HttpResponse(historia, 'application/json')
         
     if request.method == 'POST':

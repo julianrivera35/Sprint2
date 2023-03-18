@@ -17,7 +17,7 @@ def update_adenda(adenda_pk, new_adenda):
     return adenda
 
 def create_adenda(me):
-    adenda = Adenda(name = me["name"], descripcion = ["descripcion"], adenda=["adenda"])
+    adenda = Adenda(name = me["name"], descripcion = ["descripcion"], historia_id=["historia_id"])
     adenda.save()
     return adenda
 
