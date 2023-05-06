@@ -4,7 +4,7 @@ from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from monitoring.auth0backend import getRole
+from sprint.auth0backend import getRole
 
 @login_required
 def historias_view(request):
