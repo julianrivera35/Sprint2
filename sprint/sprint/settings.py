@@ -25,8 +25,28 @@ SECRET_KEY = 'django-insecure-#4c6f!f&+_ng=bys35*_mp!0aekon!epw1x&7#cap!@qt9_!*v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+LOGIN_URL = "/login/auth0"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "https://sprint-32.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F34.132.65.214:8080"
+
+SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'sprint-32.us.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = '1Qv7kaMSZDRtnmZQMdDqNx6nm1TZxBnm'
+SOCIAL_AUTH_AUTH0_SECRET = 'FtI74G5QiHZCwzacxypo3PzrAdmm3jvCrKl_5jD3rBVsraQ7KrJunZtPAAIDUV7y'
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email',
+    'role',
+]
+
+AUTHENTICATION_BACKENDS = {
+    'sprint.auth0backend.Auth0',
+    'django.contrib.auth.backends.ModelBackend',
+}
 
 # Application definition
 
@@ -38,7 +58,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'historias',
-    'adendas'
+    'adendas',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +98,12 @@ WSGI_APPLICATION = 'sprint.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postfresql_psycopg2',
+        'NAME': 'monitoring_db',
+        'USER': 'monitoring_user',
+        'PASSWORD': 'isis2503',
+        'HOST': '10.40.48.2',
+        'PORT': '5432',
     }
 }
 

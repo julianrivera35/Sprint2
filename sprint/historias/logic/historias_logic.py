@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from ..models import Historia
 from django.views.decorators.csrf import csrf_exempt
 
