@@ -43,8 +43,8 @@ def HTMLSeleccionDeUsuario(request):
     <div class="container">
         <h1>Iniciar Sesión</h1>
         <p>Selecciona el tipo de cuenta con la que deseas iniciar sesión:</p>
-        <button class="login-button" onclick="window.location.href='login-medico.html'">Médico</button>
-        <button class="login-button" onclick="window.location.href='http://127.0.0.1:8000/admin'">Administrador</button>
+        <button class="login-button" onclick="window.location.href='http://34.132.65.214:8080/login/auth0'">Médico</button>
+        <button class="login-button" onclick="window.location.href='http://34.132.65.214:8080/admin'">Administrador</button>
     </div>
     </body>
     </html>
@@ -100,7 +100,7 @@ def contenidoHTML(request):
 </head>
 <body>
   <div class="header">
-    <a class="login-button" href="http://127.0.0.1:8000/inicio/">Iniciar sesión</a>
+    <a class="login-button" href="http://34.132.65.214:8080/inicio/">Iniciar sesión</a>
   </div>
   <div class="content">
     <h1>Bienvenido a Widmy</h1>
