@@ -33,8 +33,8 @@ LOGOUT_REDIRECT_URL = "https://sprint-32.us.auth0.com/v2/logout?returnTo=http%3A
 
 SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes
 SOCIAL_AUTH_AUTH0_DOMAIN = 'sprint-32.us.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = '1Qv7kaMSZDRtnmZQMdDqNx6nm1TZxBnm'
-SOCIAL_AUTH_AUTH0_SECRET = 'FtI74G5QiHZCwzacxypo3PzrAdmm3jvCrKl_5jD3rBVsraQ7KrJunZtPAAIDUV7y'
+SOCIAL_AUTH_AUTH0_KEY = ''
+SOCIAL_AUTH_AUTH0_SECRET = ''
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
     'openid',
@@ -99,10 +99,10 @@ WSGI_APPLICATION = 'sprint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postfresql_psycopg2',
-        'NAME': 'monitoring_db',
-        'USER': 'monitoring_user',
-        'PASSWORD': 'isis2503',
-        'HOST': '10.40.48.2',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '5432',
     }
 }
