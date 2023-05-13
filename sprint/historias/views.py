@@ -1,58 +1,55 @@
 from .logic import historias_logic as me
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 from django.core import serializers
 import json
 from django.contrib.auth.decorators import login_required
 from sprint.auth0backend import getRole
+from .logic.historias_logic import get_historias, get_historia, create_historia
+from django.shortcuts import render
+from .forms import HistoriaForm
+from django.contrib import messages
+
 
 @login_required
-def historias_view(request):
+def historia_list(request):
+   role = getRole(request)
+   if role == "Medico":
+      historias = get_historias()
+      context={'historias_list': historias }
+      return render(request, 'Historia/historias.html',context)
+   else:
+      return HttpResponse("Unauthorized User")
+
+@login_required
+def single_historia(request,id=0):
+   historia = get_historia(id)
+   context = {
+       'historia':historia
+   }
+   return render(request, 'historia.html', context)
+
+@login_required
+def historia_create(request):
     role = getRole(request)
     if role == "Medico":
-        if request.method == 'GET':
-            id = request.GET.get("id", None)
-            if id:
-                historia_dto = me.get_historia(id)
-                historia = serializers.serialize('json', [historia_dto,])
-                return HttpResponse(historia, 'application/json')
-            else:
-                historias_dto = me.get_historias()
-                historias = serializers.serialize('json', historias_dto)
-                return HttpResponse(historias, 'application/json')
-
         if request.method == 'POST':
-            historia_dto = me.create_historia(json.loads(request.body))
-            historia = serializers.serialize('json', [historia_dto,])
-            return HttpResponse(historia, 'application/json')
+            form = HistoriaForm(request.POST)
+            if form.is_valid():
+                create_historia(form)
+                messages.add_message(request, messages.SUCCESS, 'Successfully created historia')
+                return HttpResponseRedirect(reverse('historiacreate'))
+            else:
+                print(form.errors)
+        else:
+            form = HistoriaForm()
+
+        context = {
+            'form': form,
+        }
+        return render(request, 'Historia/historiaCreate.html', context)
     else:
         return HttpResponse("Unauthorized User")
-    
-    #if request.method == 'DELETE':
-    #    pk = request.GET.get("id", None)
-    #    historia_dto = me.historia_delete(pk)
-    #    historia = serializers.serialize('json',[historia_dto,])
-    #    return HttpResponse('application/json')
 
-@login_required
-def historia_view(request, pk):
     
-    role = getRole(request)
-    if role == "Medico":
-        if request.method == 'GET':
-            historia_dto = me.get_historia(pk)
-            historia = serializers.serialize('json', [historia_dto,])
-            return HttpResponse(historia, 'application/json')
-
-        if request.method == 'PUT':
-            historia_dto = me.update_historia(pk, json.loads(request.body))
-            historia = serializers.serialize('json', [historia_dto,])
-            return HttpResponse(historia, 'application/json')
-    else:
-        return HttpResponse("Unauthorized User")
-    
-    #if request.method == 'DELETE':
-    #    historia_dto = me.historia_delete(pk)
-    #    historia = serializers.serialize('json',[historia_dto,])
-    #    return HttpResponse('application/json')
-
 # Create your views here.

@@ -10,18 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'svm_)tpa-o^gkn@81sel&lapq2jc7^^-n9c+4y&f9rymz$kum_'
+SECRET_KEY = 'django-insecure-#4c6f!f&+_ng=bys35*_mp!0aekon!epw1x&7#cap!@qt9_!*v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,9 +29,24 @@ ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = "/login/auth0"
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "https://sprint-32.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F34.171.211.141:8080"
+LOGOUT_REDIRECT_URL = "https://sprint-32.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F34.132.65.214:8080"
 
+SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'sprint-32.us.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = ''
+SOCIAL_AUTH_AUTH0_SECRET = ''
 
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email',
+    'role',
+]
+
+AUTHENTICATION_BACKENDS = {
+    'sprint.auth0backend.Auth0',
+    'django.contrib.auth.backends.ModelBackend',
+}
 
 # Application definition
 
@@ -47,25 +61,6 @@ INSTALLED_APPS = [
     'adendas',
     'social_django',
 ]
-
-
-SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'sprint-32.us.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = '1Qv7kaMSZDRtnmZQMdDqNx6nm1TZxBnm'
-SOCIAL_AUTH_AUTH0_SECRET = 'FtI74G5QiHZCwzacxypo3PzrAdmm3jvCrKl_5jD3rBVsraQ7KrJunZtPAAIDUV7y'
-SESSION_COOKIE_SAMESITE = None
-
-SOCIAL_AUTH_AUTH0_SCOPE = [
-    'openid',
-    'profile',
-    'email',
-    'role',
-]
-
-AUTHENTICATION_BACKENDS = {
-    'sprint.auth0backend.Auth0',
-    'django.contrib.auth.backends.ModelBackend',
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,7 +77,7 @@ ROOT_URLCONF = 'sprint.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[os.path.join(BASE_DIR,'sprint', 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,11 +98,11 @@ WSGI_APPLICATION = 'sprint.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postfresql_psycopg2',
         'NAME': 'monitoring_db',
         'USER': 'monitoring_user',
         'PASSWORD': 'isis2503',
-        'HOST': '10.40.48.18',
+        'HOST': '',
         'PORT': '5432',
     }
 }
@@ -149,7 +144,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 
 # Default primary key field type

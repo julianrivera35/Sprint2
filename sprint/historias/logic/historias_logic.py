@@ -2,12 +2,12 @@ from django.http import HttpResponse
 from ..models import Historia
 from django.views.decorators.csrf import csrf_exempt
 
-def get_historia():
-    historias = Historia.objects.all()
-    return historias
+def get_historias():
+    queryset = Historia.objects.all()
+    return (queryset)
 
-def get_historia(historia_pk):
-    historia = Historia.objects.get(pk= historia_pk)
+def get_historia(id):
+    historia = Historia.objects.raw("SELECT * FROM historias_historia WHERE id=%s" % id)[0]
     return historia
 
 def update_historia(hisotria_pk, new_historia):
@@ -17,10 +17,10 @@ def update_historia(hisotria_pk, new_historia):
     historia.save()
     return historia
 
-def create_historia(me):
-    historia = Historia(name = me["name"], descripcion = ["descripcion"])
+def create_historia(form):
+    historia = form.save()
     historia.save()
-    return historia
+    return ()
 
 def historias_view(request):
     if request.method == 'GET':
